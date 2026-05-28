@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="NutriLog"/>
+<meta name="theme-color" content="#0a0f1e"/>
+<title>NutriLog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0f1e;
+  --surface: #111827;
+  --surface2: #1a2235;
+  --border: #1e2d45;
+  --text: #f0f4ff;
+  --muted: #4a5878;
+  --subtle: #2a3550;
+  --orange: #ff6b2b;
+  --blue: #3b9eff;
+  --purple: #a855f7;
+  --yellow: #f5c842;
+  --green: #22d47a;
+  --red: #ff4757;
+  --water: #22d4c8;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+h1, h2, .syne { font-family: 'Syne', sans-serif; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(180deg, #0d1525 0%, var(--bg) 100%);
+  padding: calc(var(--safe-top) + 16px) 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.header-date { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+.header-title { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--text); line-height: 1; }
+
+.tdee-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+}
+
+.tdee-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.tdee-label { font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.tdee-value { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--orange); }
+.tdee-value span { font-size: 11px; color: var(--muted); font-weight: 400; }
+.tdee-sub { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+
+.level-btns { display: flex; gap: 6px; }
+.level-btn {
+  flex: 1; padding: 7px 4px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--surface2); color: var(--muted); font-size: 10px; font-weight: 700;
+  cursor: pointer; text-align: center; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.level-btn.active { background: var(--orange); border-color: var(--orange); color: #fff; }
+.level-btn .kcal { display: block; font-size: 9px; opacity: 0.8; margin-top: 2px; }
+
+/* TAB BAR */
+.tabs {
+  display: flex;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 8px;
+  gap: 4px;
+}
+
+.tab {
+  flex: 1; padding: 8px 4px; border-radius: 10px; border: none;
+  background: transparent; color: var(--muted); font-size: 10px; font-weight: 700;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; letter-spacing: 0.3px;
+}
+.tab.active { background: var(--text); color: var(--bg); }
+
+/* MAIN CONTENT */
+.content { padding: 14px 14px calc(var(--safe-bottom) + 20px); }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 700; color: var(--muted);
+  letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;
+}
+
+/* MACRO CARDS */
+.macro-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+.macro-card.over { border-color: var(--red); }
+
+.macro-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
+.macro-name { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; }
+.macro-nums { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; }
+.macro-nums .target { font-size: 12px; color: var(--muted); font-weight: 400; font-family: 'DM Sans', sans-serif; }
+
+.bar-track { height: 8px; background: var(--subtle); border-radius: 99px; overflow: hidden; margin-bottom: 6px; }
+.bar-fill { height: 100%; border-radius: 99px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
+
+.macro-remain { font-size: 11px; color: var(--muted); }
+.macro-remain.over { color: var(--red); }
+
+/* WATER */
+.water-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 16px; margin-bottom: 10px; }
+.water-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.water-btns { display: flex; gap: 8px; }
+.water-btn {
+  width: 38px; height: 38px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface2); color: var(--text); font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-weight: 300;
+  transition: all 0.15s;
+}
+.water-btn.add { background: var(--water); border-color: var(--water); color: var(--bg); font-weight: 700; }
+.glasses { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.glass { width: 22px; height: 26px; border-radius: 5px; background: var(--subtle); display: flex; align-items: center; justify-content: center; font-size: 10px; transition: background 0.2s; }
+.glass.filled { background: var(--water); }
+
+/* INPUT */
+.input-group { margin-bottom: 10px; }
+textarea, input[type=text] {
+  width: 100%; padding: 12px 14px; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--surface2);
+  color: var(--text); font-size: 14px; font-family: 'DM Sans', sans-serif;
+  resize: none; outline: none; transition: border-color 0.2s;
+}
+textarea:focus, input[type=text]:focus { border-color: var(--orange); }
+textarea { min-height: 72px; }
+
+.btn {
+  width: 100%; padding: 13px; border-radius: 12px; border: none;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: 'Syne', sans-serif; letter-spacing: 0.5px;
+  transition: opacity 0.2s, transform 0.1s; color: #fff;
+}
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-orange { background: var(--orange); }
+.btn-green { background: var(--green); color: var(--bg); }
+.btn-red { background: transparent; border: 1px solid var(--red); color: var(--red); }
+
+/* LOG ITEMS */
+.log-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.log-item:last-child { border-bottom: none; padding-bottom: 0; }
+.log-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.log-name { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 3px; }
+.log-sub { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.log-delete { background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; padding: 4px; margin-left: auto; flex-shrink: 0; }
+
+/* SUMMARY BARS */
+.summary-row { margin-bottom: 14px; }
+.summary-header { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
+.summary-label { font-weight: 600; color: var(--text); }
+
+/* PROFILE ROWS */
+.profile-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.profile-row:last-child { border-bottom: none; }
+.profile-key { color: var(--muted); }
+.profile-val { font-weight: 700; color: var(--text); }
+
+/* LEVEL CARDS */
+.level-card {
+  border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px; cursor: pointer; background: var(--surface2);
+  transition: all 0.2s;
+}
+.level-card.active { border-color: var(--orange); background: rgba(255,107,43,0.08); }
+.level-card-title { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 2px; }
+.level-card.active .level-card-title { color: var(--orange); }
+.level-card-desc { font-size: 11px; color: var(--muted); }
+.level-card-kcal { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; color: var(--muted); }
+.level-card.active .level-card-kcal { color: var(--orange); }
+
+/* TIP BOX */
+.tip-box { background: rgba(245,200,66,0.06); border: 1px solid rgba(245,200,66,0.2); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+.tip-title { font-size: 11px; font-weight: 700; color: var(--yellow); margin-bottom: 4px; }
+.tip-text { font-size: 11px; color: #a08040; line-height: 1.7; }
+
+/* TDEE BREAKDOWN BOX */
+.tdee-breakdown { background: rgba(34,212,122,0.06); border: 1px solid rgba(34,212,122,0.2); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.tdee-breakdown-title { font-size: 11px; font-weight: 700; color: var(--green); margin-bottom: 8px; letter-spacing: 0.5px; }
+.tdee-breakdown p { font-size: 13px; color: #5a9a7a; line-height: 1.9; }
+.tdee-breakdown strong { color: var(--green); font-weight: 800; }
+
+/* ERROR */
+.error-box { background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.3); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: var(--red); }
+
+/* SPINNER */
+.spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* HIDDEN */
+.hidden { display: none !important; }
+
+/* SCREEN */
+.screen { display: none; }
+.screen.active { display: block; }
+
+.section-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-date" id="headerDate"></div>
+      <div class="header-title">NutriLog</div>
+    </div>
+  </div>
+
+  <div class="tdee-pill">
+    <div class="tdee-row">
+      <span class="tdee-label">Today's TDEE</span>
+      <span class="tdee-value" id="tdeeValue">— <span>kcal</span></span>
+    </div>
+    <div class="tdee-sub" id="tdeeSub">BMR 2060 × 1.2 = 2472</div>
+    <div class="level-btns">
+      <button class="level-btn active" data-key="sedentary" onclick="setLevel('sedentary')">
+        Sedentary <span class="kcal">2472</span>
+      </button>
+      <button class="level-btn" data-key="light" onclick="setLevel('light')">
+        Light <span class="kcal">2833</span>
+      </button>
+      <button class="level-btn" data-key="moderate" onclick="setLevel('moderate')">
+        Moderate <span class="kcal">3193</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('dashboard')">📊 Dash</button>
+    <button class="tab" onclick="switchTab('food')">🍽️ Food</button>
+    <button class="tab" onclick="switchTab('activity')">🏃 Activity</button>
+    <button class="tab" onclick="switchTab('summary')">📋 Summary</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- ERROR -->
+  <div class="error-box hidden" id="errorBox"></div>
+
+  <!-- DASHBOARD -->
+  <div class="screen active" id="screen-dashboard">
+    <div id="macroCards"></div>
+    <div class="water-card">
+      <div class="water-header">
+        <div>
+          <div class="section-label">💧 Water</div>
+          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--water)" id="waterVal">0.00<span style="font-size:12px;color:var(--muted);font-weight:400">L / 4L</span></div>
+        </div>
+        <div class="water-btns">
+          <button class="water-btn" onclick="changeWater(-1)">−</button>
+          <button class="water-btn add" onclick="changeWater(1)">+</button>
+        </div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" id="waterBar" style="background:var(--water);width:0%"></div></div>
+      <div class="glasses" id="glassesGrid"></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px">Each tap = 250ml</div>
+    </div>
+  </div>
+
+  <!-- FOOD -->
+  <div class="screen hidden" id="screen-food">
+    <div class="card">
+      <div class="card-title">What did you eat?</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Type naturally — AI fills in the nutrition.</div>
+      <div class="input-group">
+        <textarea id="foodInput" placeholder="e.g. 2 rotis with dal, chicken curry 150g, 1 banana..."></textarea>
+      </div>
+      <button class="btn btn-orange" id="addFoodBtn" onclick="addFood()">Add Food ➕</button>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 Tips for best results</div>
+      <div class="tip-text">
+        Include quantity: "150g chicken breast"<br>
+        Indian foods: "2 idli with sambar", "1 cup dal rice"<br>
+        Snacks: "handful of walnuts", "1 banana"
+      </div>
+    </div>
+    <div class="card hidden" id="foodLog">
+      <div class="card-title" id="foodLogTitle">Today's Food</div>
+      <div id="foodItems"></div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY -->
+  <div class="screen hidden" id="screen-activity">
+    <div class="card">
+      <div class="card-title">Baseline Activity Level</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Sets your base TDEE before any workouts.</div>
+      <div id="levelCards"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Log a Workout</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">AI estimates calories for your weight (107 kg).</div>
+      <div class="input-group">
+        <input type="text" id="activityInput" placeholder="e.g. badminton 45 min, walked 30 min..." onkeydown="if(event.key==='Enter')addActivity()"/>
+      </div>
+      <button class="btn btn-green" id="addActivityBtn" onclick="addActivity()">Log Activity 🏃</button>
+    </div>
+    <div class="tdee-breakdown">
+      <div class="tdee-breakdown-title">📈 TDEE Breakdown</div>
+      <p id="tdeeBreakdown"></p>
+    </div>
+    <div class="card hidden" id="activityLog">
+      <div class="card-title">Today's Workouts</div>
+      <div id="activityItems"></div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="screen hidden" id="screen-summary">
+    <div class="card">
+      <div class="card-title">Today's Summary</div>
+      <div id="summaryBars"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Your Profile</div>
+      <div class="profile-row"><span class="profile-key">Age</span><span class="profile-val">22 yrs</span></div>
+      <div class="profile-row"><span class="profile-key">Weight</span><span class="profile-val">107 kg</span></div>
+      <div class="profile-row"><span class="profile-key">Height</span><span class="profile-val">175 cm</span></div>
+      <div class="profile-row"><span class="profile-key">BMR</span><span class="profile-val">2,060 kcal</span></div>
+      <div class="profile-row"><span class="profile-key">Goal</span><span class="profile-val">Fat Loss + Muscle</span></div>
+      <div class="profile-row" id="profileActivity"><span class="profile-key">Activity</span><span class="profile-val">—</span></div>
+    </div>
+    <button class="btn btn-red" onclick="resetDay()">🗑️ Reset Today's Log</button>
+  </div>
+
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const BMR = 2060;
+const TARGETS = { protein: 170, carbs: 190, fat: 60, fiber: 30, water: 4000 };
+const MACRO_META = {
+  calories: { label: 'Calories', unit: 'kcal', color: 'var(--orange)' },
+  protein:  { label: 'Protein',  unit: 'g',    color: 'var(--blue)'   },
+  carbs:    { label: 'Carbs',    unit: 'g',    color: 'var(--purple)' },
+  fat:      { label: 'Fat',      unit: 'g',    color: 'var(--yellow)' },
+  fiber:    { label: 'Fiber',    unit: 'g',    color: 'var(--green)'  },
+};
+const LEVELS = [
+  { key: 'sedentary', label: 'Sedentary',      desc: 'Bed / desk only',   mult: 1.2   },
+  { key: 'light',     label: 'Lightly Active', desc: 'Light walking',     mult: 1.375 },
+  { key: 'moderate',  label: 'Moderate',       desc: 'Regular exercise',  mult: 1.55  },
+];
+
+// ── GROQ API ──────────────────────────────────────────────────────────────────
+// 🔑 Paste your Groq API key here (free at console.groq.com)
+const GROQ_API_KEY = "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";
+
+async function callGroq(prompt) {
+  if (GROQ_API_KEY === "YOUR_GROQ_API_KEY_HERE") throw new Error("Paste your Groq API key in index.html");
+  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${GROQ_API_KEY}` },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      temperature: 0.1,
+      max_tokens: 256,
+      messages: [
+        { role: "system", content: "You only respond with valid JSON objects. No markdown, no explanation." },
+        { role: "user", content: prompt },
+      ],
+    }),
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  const raw = data.choices?.[0]?.message?.content || "";
+  const match = raw.match(/\{[\s\S]*\}/);
+  if (!match) throw new Error("Bad AI response");
+  return JSON.parse(match[0]);
+}
+
+async function fetchNutrition(q) {
+  return callGroq(`The user ate: "${q}". Return ONLY this JSON with realistic values for the described portion:
+{"name":"food name","calories":number,"protein":number,"carbs":number,"fat":number,"fiber":number}
+All macros in grams except calories (kcal).`);
+}
+
+async function fetchActivity(q) {
+  return callGroq(`User (107kg) did: "${q}". Return ONLY this JSON:
+{"name":"activity name","duration":"X min","calories_burned":number}`);
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const todayKey = () => new Date().toISOString().slice(0, 10);
+const emptyDay = () => ({ foods: [], activities: [], water: 0, totals: { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 } });
+
+let state = {
+  day: emptyDay(),
+  activityLevel: 'sedentary',
+  tab: 'dashboard',
+};
+
+function loadState() {
+  try {
+    const day = localStorage.getItem('day:' + todayKey());
+    const prefs = localStorage.getItem('prefs');
+    if (day) state.day = JSON.parse(day);
+    if (prefs) { const p = JSON.parse(prefs); state.activityLevel = p.activityLevel || 'sedentary'; }
+  } catch(e) { console.log(e); }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('day:' + todayKey(), JSON.stringify(state.day));
+    localStorage.setItem('prefs', JSON.stringify({ activityLevel: state.activityLevel }));
+  } catch(e) { console.log(e); }
+}
+
+// ── COMPUTED ──────────────────────────────────────────────────────────────────
+function getTDEE() {
+  const level = LEVELS.find(l => l.key === state.activityLevel);
+  const base = Math.round(BMR * level.mult);
+  const exercise = state.day.activities.reduce((s, a) => s + (a.calories_burned || 0), 0);
+  return { base, exercise, total: base + exercise, level };
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  saveState();
+  renderHeader();
+  renderDashboard();
+  renderFoodLog();
+  renderActivityLog();
+  renderSummary();
+  renderLevelCards();
+}
+
+function renderHeader() {
+  const { total, base, exercise, level } = getTDEE();
+  document.getElementById('headerDate').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+  document.getElementById('tdeeValue').innerHTML = `${total} <span>kcal</span>`;
+  document.getElementById('tdeeSub').textContent = `BMR ${BMR} × ${level.mult} = ${base}${exercise > 0 ? ` + ${exercise} exercise` : ''}`;
+  document.querySelectorAll('.level-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.key === state.activityLevel);
+  });
+}
+
+function renderDashboard() {
+  const { total } = getTDEE();
+  const macros = [
+    ['calories', Math.round(state.day.totals.calories), total],
+    ['protein',  Math.round(state.day.totals.protein),  TARGETS.protein],
+    ['carbs',    Math.round(state.day.totals.carbs),    TARGETS.carbs],
+    ['fat',      Math.round(state.day.totals.fat),      TARGETS.fat],
+    ['fiber',    Math.round(state.day.totals.fiber),    TARGETS.fiber],
+  ];
+  document.getElementById('macroCards').innerHTML = macros.map(([k, val, target]) => {
+    const meta = MACRO_META[k];
+    const pct = Math.min((val / target) * 100, 100);
+    const over = val > target;
+    const remaining = Math.max(target - val, 0);
+    return `<div class="macro-card ${over ? 'over' : ''}">
+      <div class="macro-header">
+        <span class="macro-name">${meta.label}</span>
+        <span class="macro-nums" style="color:${over ? 'var(--red)' : meta.color}">${val}<span class="target">/${target}${meta.unit}</span></span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${over ? 'var(--red)' : meta.color}"></div></div>
+      <div class="macro-remain ${over ? 'over' : ''}">${over ? `${val-target}${meta.unit} over target` : `${remaining}${meta.unit} remaining`}</div>
+    </div>`;
+  }).join('');
+
+  // Water
+  const wPct = Math.min((state.day.water / 4000) * 100, 100);
+  const glasses = Math.round(state.day.water / 250);
+  document.getElementById('waterVal').innerHTML = `${(state.day.water/1000).toFixed(2)}<span style="font-size:12px;color:var(--muted);font-weight:400">L / 4L</span>`;
+  document.getElementById('waterBar').style.width = wPct + '%';
+  document.getElementById('glassesGrid').innerHTML = Array.from({length:16}).map((_,i) =>
+    `<div class="glass ${i < glasses ? 'filled' : ''}">${i < glasses ? '💧' : ''}</div>`
+  ).join('');
+}
+
+function renderFoodLog() {
+  const foods = state.day.foods;
+  const log = document.getElementById('foodLog');
+  const items = document.getElementById('foodItems');
+  if (foods.length === 0) { log.classList.add('hidden'); return; }
+  log.classList.remove('hidden');
+  document.getElementById('foodLogTitle').textContent = `Today's Food (${foods.length} items)`;
+  items.innerHTML = foods.map(f => `
+    <div class="log-item">
+      <span class="log-icon">🍽️</span>
+      <div style="flex:1">
+        <div class="log-name">${f.name}</div>
+        <div class="log-sub">🔥${f.calories}kcal · 💪${f.protein}g · 🌾${f.carbs}g · 🧈${f.fat}g · 🌿${f.fiber}g</div>
+      </div>
+      <button class="log-delete" onclick="deleteFood(${f.id})">✕</button>
+    </div>`).join('');
+}
+
+function renderActivityLog() {
+  const acts = state.day.activities;
+  const log = document.getElementById('activityLog');
+  const items = document.getElementById('activityItems');
+  const { base, exercise, total, level } = getTDEE();
+  document.getElementById('tdeeBreakdown').innerHTML =
+    `BMR: ${BMR} kcal<br>× ${level.mult} (${level.label}) = ${base} kcal<br>+ Workouts: ${exercise} kcal<br><strong>= Today's TDEE: ${total} kcal</strong>`;
+  if (acts.length === 0) { log.classList.add('hidden'); return; }
+  log.classList.remove('hidden');
+  items.innerHTML = acts.map(a => `
+    <div class="log-item">
+      <span class="log-icon">🏃</span>
+      <div style="flex:1">
+        <div class="log-name">${a.name}</div>
+        <div class="log-sub">⏱ ${a.duration} · 🔥 ${a.calories_burned} kcal burned</div>
+      </div>
+      <button class="log-delete" onclick="deleteActivity(${a.id})">✕</button>
+    </div>`).join('');
+}
+
+function renderSummary() {
+  const { total } = getTDEE();
+  const rows = [
+    ['calories', Math.round(state.day.totals.calories), total,            'kcal', 'var(--orange)'],
+    ['protein',  Math.round(state.day.totals.protein),  TARGETS.protein,  'g',    'var(--blue)'],
+    ['carbs',    Math.round(state.day.totals.carbs),    TARGETS.carbs,    'g',    'var(--purple)'],
+    ['fat',      Math.round(state.day.totals.fat),      TARGETS.fat,      'g',    'var(--yellow)'],
+    ['fiber',    Math.round(state.day.totals.fiber),    TARGETS.fiber,    'g',    'var(--green)'],
+  ];
+  document.getElementById('summaryBars').innerHTML = [...rows.map(([k,val,target,unit,color]) => {
+    const pct = Math.min((val/target)*100, 100);
+    const meta = MACRO_META[k];
+    return `<div class="summary-row">
+      <div class="summary-header">
+        <span class="summary-label">${meta.label}</span>
+        <span style="color:${color};font-weight:700">${val} / ${target} ${unit}</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
+    </div>`;
+  }),
+  [`<div class="summary-row">
+    <div class="summary-header">
+      <span class="summary-label">💧 Water</span>
+      <span style="color:var(--water);font-weight:700">${(state.day.water/1000).toFixed(2)}L / 4L</span>
+    </div>
+    <div class="bar-track"><div class="bar-fill" style="width:${Math.min((state.day.water/4000)*100,100)}%;background:var(--water)"></div></div>
+  </div>`]].join('');
+
+  const { level, base } = getTDEE();
+  document.getElementById('profileActivity').innerHTML =
+    `<span class="profile-key">Activity</span><span class="profile-val">×${level.mult} → ${base} kcal</span>`;
+}
+
+function renderLevelCards() {
+  document.getElementById('levelCards').innerHTML = LEVELS.map(l => `
+    <div class="level-card ${state.activityLevel === l.key ? 'active' : ''}" onclick="setLevel('${l.key}')">
+      <div>
+        <div class="level-card-title">${l.label}</div>
+        <div class="level-card-desc">${l.desc}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="level-card-kcal">${Math.round(BMR * l.mult)}</div>
+        <div style="font-size:10px;color:var(--muted)">kcal/day</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── ACTIONS ───────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  state.tab = tab;
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const tabs = ['dashboard','food','activity','summary'];
+    t.classList.toggle('active', tabs[i] === tab);
+  });
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+  const screen = document.getElementById('screen-' + tab);
+  if (screen) { screen.classList.remove('hidden'); screen.classList.add('active'); }
+  hideError();
+}
+
+function setLevel(key) {
+  state.activityLevel = key;
+  render();
+}
+
+function changeWater(dir) {
+  state.day.water = Math.max(0, state.day.water + dir * 250);
+  render();
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorBox');
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+function hideError() {
+  document.getElementById('errorBox').classList.add('hidden');
+}
+
+async function addFood() {
+  const input = document.getElementById('foodInput');
+  const val = input.value.trim();
+  if (!val) return;
+  const btn = document.getElementById('addFoodBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>';
+  hideError();
+  try {
+    const n = await fetchNutrition(val);
+    state.day.foods.push({ ...n, id: Date.now() });
+    state.day.totals.calories += n.calories || 0;
+    state.day.totals.protein  += n.protein  || 0;
+    state.day.totals.carbs    += n.carbs    || 0;
+    state.day.totals.fat      += n.fat      || 0;
+    state.day.totals.fiber    += n.fiber    || 0;
+    input.value = '';
+    render();
+  } catch(e) { showError('Error: ' + e.message); }
+  btn.disabled = false;
+  btn.innerHTML = 'Add Food ➕';
+}
+
+async function addActivity() {
+  const input = document.getElementById('activityInput');
+  const val = input.value.trim();
+  if (!val) return;
+  const btn = document.getElementById('addActivityBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>';
+  hideError();
+  try {
+    const a = await fetchActivity(val);
+    state.day.activities.push({ ...a, id: Date.now() });
+    input.value = '';
+    render();
+  } catch(e) { showError('Error: ' + e.message); }
+  btn.disabled = false;
+  btn.innerHTML = 'Log Activity 🏃';
+}
+
+function deleteFood(id) {
+  const food = state.day.foods.find(f => f.id === id);
+  if (!food) return;
+  state.day.foods = state.day.foods.filter(f => f.id !== id);
+  state.day.totals.calories = Math.max(0, state.day.totals.calories - food.calories);
+  state.day.totals.protein  = Math.max(0, state.day.totals.protein  - food.protein);
+  state.day.totals.carbs    = Math.max(0, state.day.totals.carbs    - food.carbs);
+  state.day.totals.fat      = Math.max(0, state.day.totals.fat      - food.fat);
+  state.day.totals.fiber    = Math.max(0, state.day.totals.fiber    - food.fiber);
+  render();
+}
+
+function deleteActivity(id) {
+  state.day.activities = state.day.activities.filter(a => a.id !== id);
+  render();
+}
+
+function resetDay() {
+  if (!confirm('Reset today\'s log? This cannot be undone.')) return;
+  state.day = emptyDay();
+  render();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadState();
+render();
+</script>
+</body>
+</html>
