@@ -4,28 +4,28 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="apple-mobile-web-app-title" content="NutriLog"/>
 <meta name="theme-color" content="#0a0f1e"/>
 <title>NutriLog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg: #0a0f1e;
-  --surface: #111827;
-  --surface2: #1a2235;
-  --border: #1e2d45;
-  --text: #f0f4ff;
-  --muted: #4a5878;
-  --subtle: #2a3550;
-  --orange: #ff6b2b;
-  --blue: #3b9eff;
-  --purple: #a855f7;
-  --yellow: #f5c842;
-  --green: #22d47a;
-  --red: #ff4757;
-  --water: #22d4c8;
+  --bg: #f2f4f8;
+  --surface: #ffffff;
+  --surface2: #f7f8fc;
+  --border: #e8ecf2;
+  --text: #0d1117;
+  --muted: #8a94a6;
+  --subtle: #e4e8f0;
+  --orange: #ff5722;
+  --blue: #1a7cfa;
+  --purple: #7c3aed;
+  --yellow: #d97706;
+  --green: #16a34a;
+  --red: #dc2626;
+  --water: #0891b2;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -35,18 +35,18 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, 'Inter', sans-serif;
   min-height: 100vh;
   max-width: 430px;
   margin: 0 auto;
   overflow-x: hidden;
 }
 
-h1, h2, .syne { font-family: 'Syne', sans-serif; }
+h1, h2, .syne { font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif; letter-spacing: -0.5px; }
 
 /* HEADER */
 .header {
-  background: linear-gradient(180deg, #0d1525 0%, var(--bg) 100%);
+  background: var(--bg);
   padding: calc(var(--safe-top) + 16px) 20px 0;
   position: sticky;
   top: 0;
@@ -60,20 +60,21 @@ h1, h2, .syne { font-family: 'Syne', sans-serif; }
   margin-bottom: 14px;
 }
 
-.header-date { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
-.header-title { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--text); line-height: 1; }
+.header-date { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+.header-title { font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 26px; font-weight: 800; color: var(--text); line-height: 1; }
 
 .tdee-pill {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px 16px;
+  border-radius: 16px;
+  padding: 14px 16px;
   margin-bottom: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
 .tdee-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .tdee-label { font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-.tdee-value { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--orange); }
+.tdee-value { font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 22px; font-weight: 800; color: var(--orange); }
 .tdee-value span { font-size: 11px; color: var(--muted); font-weight: 400; }
 .tdee-sub { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
 
@@ -81,7 +82,7 @@ h1, h2, .syne { font-family: 'Syne', sans-serif; }
 .level-btn {
   flex: 1; padding: 7px 4px; border-radius: 10px; border: 1px solid var(--border);
   background: var(--surface2); color: var(--muted); font-size: 10px; font-weight: 700;
-  cursor: pointer; text-align: center; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  cursor: pointer; text-align: center; transition: all 0.2s; font-family: -apple-system, 'Inter', sans-serif;
 }
 .level-btn.active { background: var(--orange); border-color: var(--orange); color: #fff; }
 .level-btn .kcal { display: block; font-size: 9px; opacity: 0.8; margin-top: 2px; }
@@ -94,14 +95,15 @@ h1, h2, .syne { font-family: 'Syne', sans-serif; }
   border-bottom: 1px solid var(--border);
   padding: 6px 8px;
   gap: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
 .tab {
   flex: 1; padding: 8px 4px; border-radius: 10px; border: none;
   background: transparent; color: var(--muted); font-size: 10px; font-weight: 700;
-  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; letter-spacing: 0.3px;
+  cursor: pointer; font-family: -apple-system, 'Inter', sans-serif; transition: all 0.2s; letter-spacing: 0.3px;
 }
-.tab.active { background: var(--text); color: var(--bg); }
+.tab.active { background: var(--text); color: #fff; font-weight: 600; }
 
 /* MAIN CONTENT */
 .content { padding: 14px 14px calc(var(--safe-bottom) + 20px); }
@@ -110,13 +112,14 @@ h1, h2, .syne { font-family: 'Syne', sans-serif; }
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 16px;
   margin-bottom: 10px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
 }
 
 .card-title {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif; letter-spacing: -0.5px;
   font-size: 12px; font-weight: 700; color: var(--muted);
   letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;
 }
@@ -125,26 +128,27 @@ h1, h2, .syne { font-family: 'Syne', sans-serif; }
 .macro-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 14px 16px;
   margin-bottom: 10px;
   transition: border-color 0.3s;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
 }
-.macro-card.over { border-color: var(--red); }
+.macro-card.over { border-color: var(--red); background: #fff8f8; }
 
 .macro-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
 .macro-name { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; }
-.macro-nums { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; }
-.macro-nums .target { font-size: 12px; color: var(--muted); font-weight: 400; font-family: 'DM Sans', sans-serif; }
+.macro-nums { font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 18px; font-weight: 800; }
+.macro-nums .target { font-size: 12px; color: var(--muted); font-weight: 400; font-family: -apple-system, 'Inter', sans-serif; }
 
-.bar-track { height: 8px; background: var(--subtle); border-radius: 99px; overflow: hidden; margin-bottom: 6px; }
+.bar-track { height: 6px; background: var(--subtle); border-radius: 99px; overflow: hidden; margin-bottom: 6px; }
 .bar-fill { height: 100%; border-radius: 99px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
 
 .macro-remain { font-size: 11px; color: var(--muted); }
 .macro-remain.over { color: var(--red); }
 
 /* WATER */
-.water-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 16px; margin-bottom: 10px; }
+.water-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 10px; }
 .water-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .water-btns { display: flex; gap: 8px; }
 .water-btn {
@@ -163,7 +167,7 @@ h1, h2, .syne { font-family: 'Syne', sans-serif; }
 textarea, input[type=text] {
   width: 100%; padding: 12px 14px; border-radius: 12px;
   border: 1px solid var(--border); background: var(--surface2);
-  color: var(--text); font-size: 14px; font-family: 'DM Sans', sans-serif;
+  color: var(--text); font-size: 14px; font-family: -apple-system, 'Inter', sans-serif;
   resize: none; outline: none; transition: border-color 0.2s;
 }
 textarea:focus, input[type=text]:focus { border-color: var(--orange); }
@@ -172,7 +176,7 @@ textarea { min-height: 72px; }
 .btn {
   width: 100%; padding: 13px; border-radius: 12px; border: none;
   font-size: 14px; font-weight: 700; cursor: pointer;
-  font-family: 'Syne', sans-serif; letter-spacing: 0.5px;
+  font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif; letter-spacing: -0.5px; letter-spacing: 0.5px;
   transition: opacity 0.2s, transform 0.1s; color: #fff;
 }
 .btn:active { transform: scale(0.98); }
@@ -205,31 +209,31 @@ textarea { min-height: 72px; }
 
 /* LEVEL CARDS */
 .level-card {
-  border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px;
+  border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px;
   display: flex; justify-content: space-between; align-items: center;
   margin-bottom: 8px; cursor: pointer; background: var(--surface2);
   transition: all 0.2s;
 }
-.level-card.active { border-color: var(--orange); background: rgba(255,107,43,0.08); }
+.level-card.active { border-color: var(--orange); background: #fff7f5; }
 .level-card-title { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 2px; }
 .level-card.active .level-card-title { color: var(--orange); }
 .level-card-desc { font-size: 11px; color: var(--muted); }
-.level-card-kcal { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; color: var(--muted); }
+.level-card-kcal { font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 16px; font-weight: 800; color: var(--muted); }
 .level-card.active .level-card-kcal { color: var(--orange); }
 
 /* TIP BOX */
-.tip-box { background: rgba(245,200,66,0.06); border: 1px solid rgba(245,200,66,0.2); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
-.tip-title { font-size: 11px; font-weight: 700; color: var(--yellow); margin-bottom: 4px; }
-.tip-text { font-size: 11px; color: #a08040; line-height: 1.7; }
+.tip-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+.tip-title { font-size: 11px; font-weight: 700; color: #b45309; margin-bottom: 4px; }
+.tip-text { font-size: 11px; color: #78350f; line-height: 1.7; }
 
 /* TDEE BREAKDOWN BOX */
-.tdee-breakdown { background: rgba(34,212,122,0.06); border: 1px solid rgba(34,212,122,0.2); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
-.tdee-breakdown-title { font-size: 11px; font-weight: 700; color: var(--green); margin-bottom: 8px; letter-spacing: 0.5px; }
-.tdee-breakdown p { font-size: 13px; color: #5a9a7a; line-height: 1.9; }
-.tdee-breakdown strong { color: var(--green); font-weight: 800; }
+.tdee-breakdown { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.tdee-breakdown-title { font-size: 11px; font-weight: 700; color: #16a34a; margin-bottom: 8px; letter-spacing: 0.5px; }
+.tdee-breakdown p { font-size: 13px; color: #166534; line-height: 1.9; }
+.tdee-breakdown strong { color: #15803d; font-weight: 700; }
 
 /* ERROR */
-.error-box { background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.3); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: var(--red); }
+.error-box { background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: #dc2626; }
 
 /* SPINNER */
 .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -243,6 +247,30 @@ textarea { min-height: 72px; }
 .screen.active { display: block; }
 
 .section-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; }
+
+/* MODE TOGGLE */
+.mode-btn {
+  flex: 1; padding: 10px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--muted); font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: -apple-system, 'Inter', sans-serif; transition: all 0.2s;
+}
+.mode-btn.active { background: #fff7f5; border-color: var(--orange); color: var(--orange); font-weight: 700; }
+
+/* STEPPER */
+.macro-stepper { background: var(--surface2); border: 1.5px solid var(--border); border-radius: 12px; padding: 10px; }
+.stepper-label { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; }
+.stepper-row { display: flex; align-items: center; gap: 6px; }
+.stepper-btn {
+  width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-weight: 300; line-height: 1;
+}
+.stepper-input {
+  flex: 1; background: transparent; border: none; color: var(--text);
+  font-size: 16px; font-weight: 700; text-align: center; outline: none;
+  font-family: -apple-system, 'Inter', sans-serif; padding: 0; width: 100%;
+}
 </style>
 </head>
 <body>
@@ -311,22 +339,86 @@ textarea { min-height: 72px; }
 
   <!-- FOOD -->
   <div class="screen hidden" id="screen-food">
-    <div class="card">
-      <div class="card-title">What did you eat?</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Type naturally — AI fills in the nutrition.</div>
-      <div class="input-group">
-        <textarea id="foodInput" placeholder="e.g. 2 rotis with dal, chicken curry 150g, 1 banana..."></textarea>
-      </div>
-      <button class="btn btn-orange" id="addFoodBtn" onclick="addFood()">Add Food ➕</button>
+
+    <!-- Mode toggle -->
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <button class="mode-btn active" id="modeAI" onclick="setFoodMode('ai')">🤖 AI Lookup</button>
+      <button class="mode-btn" id="modeManual" onclick="setFoodMode('manual')">✏️ Manual Entry</button>
     </div>
-    <div class="tip-box">
-      <div class="tip-title">💡 Tips for best results</div>
-      <div class="tip-text">
-        Include quantity: "150g chicken breast"<br>
-        Indian foods: "2 idli with sambar", "1 cup dal rice"<br>
-        Snacks: "handful of walnuts", "1 banana"
+
+    <!-- AI MODE -->
+    <div id="aiMode">
+      <div class="card">
+        <div class="card-title">What did you eat?</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Type naturally — AI fills in the nutrition.</div>
+        <div class="input-group">
+          <textarea id="foodInput" placeholder="e.g. 2 rotis with dal, chicken curry 150g, idli with boiled egg less oil..."></textarea>
+        </div>
+        <button class="btn btn-orange" id="addFoodBtn" onclick="addFood()">Add Food ➕</button>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">💡 Tips for best results</div>
+        <div class="tip-text">
+          Include quantity: "150g chicken breast"<br>
+          Combos work: "idli with boiled egg less oil"<br>
+          Indian foods: "1 cup dal rice", "2 roti with sabzi"
+        </div>
       </div>
     </div>
+
+    <!-- MANUAL MODE -->
+    <div id="manualMode" class="hidden">
+      <div class="card">
+        <div class="card-title">Manual Entry</div>
+        <div class="input-group">
+          <input type="text" id="manualName" placeholder="Food name e.g. Chicken Curry"/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div class="macro-stepper">
+            <div class="stepper-label" style="color:var(--orange)">Calories (kcal)</div>
+            <div class="stepper-row">
+              <button class="stepper-btn" onclick="stepMacro('manualCal',-50)">−</button>
+              <input type="number" id="manualCal" value="0" min="0" class="stepper-input"/>
+              <button class="stepper-btn" onclick="stepMacro('manualCal',50)">+</button>
+            </div>
+          </div>
+          <div class="macro-stepper">
+            <div class="stepper-label" style="color:var(--blue)">Protein (g)</div>
+            <div class="stepper-row">
+              <button class="stepper-btn" onclick="stepMacro('manualProtein',-5)">−</button>
+              <input type="number" id="manualProtein" value="0" min="0" class="stepper-input"/>
+              <button class="stepper-btn" onclick="stepMacro('manualProtein',5)">+</button>
+            </div>
+          </div>
+          <div class="macro-stepper">
+            <div class="stepper-label" style="color:var(--purple)">Carbs (g)</div>
+            <div class="stepper-row">
+              <button class="stepper-btn" onclick="stepMacro('manualCarbs',-5)">−</button>
+              <input type="number" id="manualCarbs" value="0" min="0" class="stepper-input"/>
+              <button class="stepper-btn" onclick="stepMacro('manualCarbs',5)">+</button>
+            </div>
+          </div>
+          <div class="macro-stepper">
+            <div class="stepper-label" style="color:var(--yellow)">Fat (g)</div>
+            <div class="stepper-row">
+              <button class="stepper-btn" onclick="stepMacro('manualFat',-5)">−</button>
+              <input type="number" id="manualFat" value="0" min="0" class="stepper-input"/>
+              <button class="stepper-btn" onclick="stepMacro('manualFat',5)">+</button>
+            </div>
+          </div>
+          <div class="macro-stepper">
+            <div class="stepper-label" style="color:var(--green)">Fiber (g)</div>
+            <div class="stepper-row">
+              <button class="stepper-btn" onclick="stepMacro('manualFiber',-1)">−</button>
+              <input type="number" id="manualFiber" value="0" min="0" class="stepper-input"/>
+              <button class="stepper-btn" onclick="stepMacro('manualFiber',1)">+</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-orange" onclick="addManualFood()">Add Food ➕</button>
+      </div>
+    </div>
+
     <div class="card hidden" id="foodLog">
       <div class="card-title" id="foodLogTitle">Today's Food</div>
       <div id="foodItems"></div>
@@ -397,7 +489,7 @@ const LEVELS = [
 
 // ── GROQ API ──────────────────────────────────────────────────────────────────
 // 🔑 Paste your Groq API key here (free at console.groq.com)
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
 
 async function callGroq(prompt) {
   if (GROQ_API_KEY === "YOUR_GROQ_API_KEY_HERE") throw new Error("Paste your Groq API key in index.html");
@@ -423,8 +515,18 @@ async function callGroq(prompt) {
 }
 
 async function fetchNutrition(q) {
-  return callGroq(`The user ate: "${q}". Return ONLY this JSON with realistic values for the described portion:
-{"name":"food name","calories":number,"protein":number,"carbs":number,"fat":number,"fiber":number}
+  return callGroq(`You are a smart nutrition estimator for Indian and international foods.
+The user logged: "${q}"
+
+Rules:
+- Handle combo meals like "idli with boiled egg" or "rice and dal with chicken"
+- Handle qualifiers: "less oil", "more ghee", "extra rice", "small portion" — adjust values accordingly
+- If multiple foods, sum up all nutrition into one combined entry
+- Use realistic Indian home-cooked values (not restaurant)
+- Name should reflect the full meal e.g. "2 Idli + Boiled Egg"
+
+Return ONLY this JSON, nothing else:
+{"name":"meal name","calories":number,"protein":number,"carbs":number,"fat":number,"fiber":number}
 All macros in grams except calories (kcal).`);
 }
 
@@ -700,6 +802,51 @@ function deleteActivity(id) {
 function resetDay() {
   if (!confirm('Reset today\'s log? This cannot be undone.')) return;
   state.day = emptyDay();
+  render();
+}
+
+// ── FOOD MODE ─────────────────────────────────────────────────────────────────
+function setFoodMode(mode) {
+  document.getElementById('aiMode').classList.toggle('hidden', mode !== 'ai');
+  document.getElementById('manualMode').classList.toggle('hidden', mode !== 'manual');
+  document.getElementById('modeAI').classList.toggle('active', mode === 'ai');
+  document.getElementById('modeManual').classList.toggle('active', mode === 'manual');
+}
+
+function stepMacro(id, delta) {
+  const el = document.getElementById(id);
+  const val = parseFloat(el.value) || 0;
+  el.value = Math.max(0, val + delta);
+}
+
+function addManualFood() {
+  const name = document.getElementById('manualName').value.trim() || 'Manual Entry';
+  const calories = parseFloat(document.getElementById('manualCal').value)     || 0;
+  const protein  = parseFloat(document.getElementById('manualProtein').value) || 0;
+  const carbs    = parseFloat(document.getElementById('manualCarbs').value)   || 0;
+  const fat      = parseFloat(document.getElementById('manualFat').value)     || 0;
+  const fiber    = parseFloat(document.getElementById('manualFiber').value)   || 0;
+
+  if (calories === 0 && protein === 0 && carbs === 0 && fat === 0) {
+    showError('Please enter at least one macro value.'); return;
+  }
+
+  state.day.foods.push({ name, calories, protein, carbs, fat, fiber, id: Date.now() });
+  state.day.totals.calories += calories;
+  state.day.totals.protein  += protein;
+  state.day.totals.carbs    += carbs;
+  state.day.totals.fat      += fat;
+  state.day.totals.fiber    += fiber;
+
+  // Reset fields
+  document.getElementById('manualName').value    = '';
+  document.getElementById('manualCal').value     = '0';
+  document.getElementById('manualProtein').value = '0';
+  document.getElementById('manualCarbs').value   = '0';
+  document.getElementById('manualFat').value     = '0';
+  document.getElementById('manualFiber').value   = '0';
+
+  hideError();
   render();
 }
 
