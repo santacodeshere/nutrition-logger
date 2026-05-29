@@ -489,10 +489,10 @@ const LEVELS = [
 
 // ── GROQ API ──────────────────────────────────────────────────────────────────
 // 🔑 Paste your Groq API key here (free at console.groq.com)
-const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
+const GROQ_API_KEY = "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";
 
 async function callGroq(prompt) {
-  if (GROQ_API_KEY === "YOUR_GROQ_API_KEY_HERE") throw new Error("Paste your Groq API key in index.html");
+  if (GROQ_API_KEY === "") throw new Error("Paste your Groq API key in index.html");
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": `Bearer ${GROQ_API_KEY}` },
